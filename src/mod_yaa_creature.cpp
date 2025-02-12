@@ -18,7 +18,7 @@ public:
     return true;
   }
 
-  bool OnGossipSelect(Player *player, Creature *creature, uint32 sender, uint32 action) override
+  bool OnGossipSelect(Player *player, Creature */*creature*/, uint32 sender, uint32 action) override
   {
     if (sender != GOSSIP_SENDER_MAIN)
     {
@@ -27,14 +27,15 @@ public:
 
     if (action == 1)
     {
-      ClearGossipMenuFor(player);
+      CloseGossipMenuFor(player);
       player->resetTalents(true);
       player->SendTalentsInfoData(false);
       player->CastSpell(player, 31726);
+      ChatHandler(player->GetSession()).SendNotification("Your talents has been reset!");
     }
     else if (action == 2)
     {
-      ClearGossipMenuFor(player);
+      CloseGossipMenuFor(player);
       for (uint8 i = 0; i < MAX_DIFFICULTY; ++i)
       {
         BoundInstancesMap const &m_boundInstances = sInstanceSaveMgr->PlayerGetBoundInstances(player->GetGUID(), Difficulty(i));
@@ -49,7 +50,8 @@ public:
             ++itr;
         }
       }
-      player->CastSpell(player, 59908);
+      player->CastSpell(player, 31726);
+      ChatHandler(player->GetSession()).SendNotification("All your instances were reset!");
     }
     else if (action == 3)
     {
@@ -62,6 +64,8 @@ public:
           player->SetSkill(SkillIds[i], player->GetSkillStep(SkillIds[i]), 350, 450);
         }
       }
+      player->CastSpell(player, 31726);
+      ChatHandler(player->GetSession()).SendNotification("Your professions are now 350!");
     }
 
     return true;

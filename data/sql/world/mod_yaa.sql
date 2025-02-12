@@ -14,4 +14,4 @@ INSERT INTO `creature_template_model` (`CreatureID`, `Idx`, `CreatureDisplayID`,
 
 DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES
-(@Entry, 570, 5890.5186, 674.1876, 643.5839, 3.4373019);
+(@Entry, 571, 5890.5186, 674.1876, 643.5839, 3.4373019);
